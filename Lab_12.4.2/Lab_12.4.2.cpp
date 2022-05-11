@@ -9,20 +9,23 @@ struct Elem
 	int info;
 };
 
-void insert(Elem*& begin, int value)
+void insert(Elem*& begin, int value, Elem *&T)
 {
 	Elem* tmp = new Elem; // 1
 	tmp->info = value; // 2
-	if (begin != NULL)
+	if (begin != NULL&&T!=NULL)
 	{
-		Elem* T = begin;
-		while (T->next != begin)
-			T = T->next; // 3
-		T->next = tmp; // 4
+		T->next = tmp;
+		T = T->next;
+		//Elem* T = begin;
+		//while (T->next != begin)
+		//	T = T->next; // 3
+		//T->next = tmp; // 4
 	}
 	else
 	{
 		begin = tmp; // 5
+		T = begin;
 	}
 	tmp->next = begin; // 6
 }
@@ -172,18 +175,20 @@ int main()
 	Elem* begin1 = NULL,
 		* end1 = NULL,
 		* begin2 = NULL,
-		* end2 = NULL;
+		* end2 = NULL,
+		* T=NULL;
 	int a1[5] = { 1,1,2,3,3 };
 	int a2[3] = { 1,2,3 };
 	for (int i = 0; i < 5; i++)
 	{
 		//Create(end1, begin1, a1[i]);
-		insert(begin1, a1[i]);
+		insert(begin1, a1[i],T);
 	}
+	T = NULL;
 	for (int i = 0; i < 3; i++)
 	{
 		//Create(end2, begin2, a2[i]);
-		insert(begin2, a2[i]);
+		insert(begin2, a2[i],T);
 	}
 	Print(begin2,begin2);
 	cout << endl;
